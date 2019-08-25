@@ -43,7 +43,20 @@ function customer(res) {
                 var product = answer.choice;
                 var id = i;
 
-                
+                inquirer.prompt({
+                    type: "input",
+                    name: "quantity",
+                    message: "How many would you like to buy?",
+                    validate: function(value) {
+                        if (isNaN(value) === false) {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    }
+                }).then(function(answer) {
+                    
+                })
             }
         }
     })
