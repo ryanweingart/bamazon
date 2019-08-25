@@ -34,11 +34,14 @@ function customer(res) {
     inquirer.prompt([{
         type: "input",
         name: "choice",
-        message: "Which item would you like to buy? Please use the Item #"
+        message: "Which item would you like to buy? [Type EXIT to leave the app]"
     }]).then(function(answer) {
         var correct = false;
+        if (answer.choice.toUpperCase() === "EXIT") {
+            process.exit();
+        }
         for (var i = 0; i < res.length; i++) {
-            if (res[i].item_id === answer.choice) {
+            if (res[i].product_name === answer.choice) {
                 correct = true;
                 var product = answer.choice;
                 var id = i;
@@ -55,9 +58,21 @@ function customer(res) {
                         }
                     }
                 }).then(function(answer) {
-                    
+                    if ((res[id].stock_quantity - answer.quantity) > 0) {
+                        connection.query("UPDATE products SET stock_quantity='" + (res[id].stock_quantity - answer.quantity) + "' WHERE product_name='" + product + "'", function(err,res2) {
+                            log("You have purchased the product!");
+                            table();
+                        })
+                    } else {
+                        log("Not enough in stock!");
+                        customer();
+                    }
                 })
             }
+        }
+        if ( i === res.length && correct === false) {
+            log("Your request has not been processed; please try again");
+            customer(res);
         }
     })
 }
