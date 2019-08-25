@@ -26,5 +26,25 @@ function table() {
                 "Price: $" + res[i].price + "\n" + 
                 "Quantity Available: " + res[i].stock_quantity + "\n");
         }
+        customer(res);
+    })
+}
+
+function customer(res) {
+    inquirer.prompt([{
+        type: "input",
+        name: "choice",
+        message: "Which item would you like to buy? Please use the Item #"
+    }]).then(function(answer) {
+        var correct = false;
+        for (var i = 0; i < res.length; i++) {
+            if (res[i].item_id === answer.choice) {
+                correct = true;
+                var product = answer.choice;
+                var id = i;
+
+                
+            }
+        }
     })
 }
