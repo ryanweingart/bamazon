@@ -90,7 +90,7 @@ function customer(res) {
                         })
                     } else {
                         log("\nNot enough in stock! There are only " + res[id].stock_quantity + " " + product + "s available, please try again.\n");
-                        customer();
+                        customer(res);
                     }
 
                 })
