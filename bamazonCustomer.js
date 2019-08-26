@@ -12,15 +12,26 @@ var connection = mysql.createConnection({
 
 connection.connect(function(error) {
     if (error) throw error;
-    log("Connection Successful!")
 
-    table();
-})
+    inquirer.prompt({
+        type: "confirm",
+        name: "confirm",
+        message: "Welcome to Bamazon! Would you like to purchase something from our store?",
+        default: true
+    }).then(function(answer) {
+        if (answer.confirm) {
+            table();
+        } else {
+            log("Thank you for stopping by!")
+            process.exit();
+        }
+    })
+    })
 
 function table() {
     connection.query("SELECT * FROM products", function(err, res) {
         for (var i = 0; i < res.length; i++) {
-            log("Item #" + res[i].item_id + " || " + 
+            log("\nItem #" + res[i].item_id + " || " + 
                 "Product: " + res[i].product_name + " || " + 
                 "Department: " + res[i].department_name + " || " + 
                 "Price: $" + res[i].price + " || " + 
@@ -34,10 +45,11 @@ function customer(res) {
     inquirer.prompt([{
         type: "input",
         name: "choice",
-        message: "Which item would you like to buy? [Type EXIT to leave the app]"
+        message: "Which item would you like to buy? [Type 'exit' to leave the app]"
     }]).then(function(answer) {
         var correct = false;
-        if (answer.choice.toUpperCase() === "EXIT") {
+        if (answer.choice === "exit") {
+            log("Thank you for stopping by!");
             process.exit();
         }
         for (var i = 0; i < res.length; i++) {
