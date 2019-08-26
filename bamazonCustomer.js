@@ -60,8 +60,8 @@ function customer(res) {
                 }).then(function(answer) {
                     if ((res[id].stock_quantity - answer.quantity) > 0) {
                         connection.query("UPDATE products SET stock_quantity='" + (res[id].stock_quantity - answer.quantity) + "' WHERE product_name='" + product + "'", function(err,res2) {
-                            log("You have purchased " + answer.quantity + " " + product + "s. \n" +
-                            "Your total for your purchase is $" + (answer.quantity * res[id].price) + ".");
+                            log("\nYou have purchased " + answer.quantity + " " + product + "s. \n" +
+                            "Your total for your purchase is $" + (answer.quantity * res[id].price) + ".\n");
 
                             inquirer.prompt({
                                 type: "confirm",
@@ -77,7 +77,7 @@ function customer(res) {
                             })
                         })
                     } else {
-                        log("Not enough in stock! There are only " + res[id].stock_quantity + " " + product + "s available, please try again.");
+                        log("\nNot enough in stock! There are only " + res[id].stock_quantity + " " + product + "s available, please try again.\n");
                         customer();
                     }
 
