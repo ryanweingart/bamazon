@@ -16,13 +16,13 @@ connection.connect(function(error) {
     inquirer.prompt({
         type: "confirm",
         name: "confirm",
-        message: "Welcome to Bamazon! Would you like to purchase something from our store?",
+        message: "\nWelcome to Bamazon! Would you like to purchase something from our store?",
         default: true
     }).then(function(answer) {
         if (answer.confirm) {
             table();
         } else {
-            log("Thank you for stopping by!")
+            log("\nThank you for stopping by!\n")
             process.exit();
         }
     })
@@ -49,11 +49,11 @@ function customer(res) {
     }]).then(function(answer) {
         var correct = false;
         if (answer.choice === "exit") {
-            log("Thank you for stopping by!");
+            log("\nThank you for stopping by!\n");
             process.exit();
         }
         for (var i = 0; i < res.length; i++) {
-            if (res[i].product_name === answer.choice) {
+            if (res[i].product_name.toLowerCase() === answer.choice) {
                 correct = true;
                 var product = answer.choice;
                 var id = i;
@@ -84,12 +84,13 @@ function customer(res) {
                                 if (answer.confirm) {
                                     table();
                                 } else {
+                                    log("\nThank you for stopping by!\n")
                                     process.exit();
                                 }
                             })
                         })
                     } else {
-                        log("\nNot enough in stock! There are only " + res[id].stock_quantity + " " + product + "s available, please try again.\n");
+                        log("\nNot enough in stock! There is/are only " + res[id].stock_quantity + " " + product + "(s)N available, please try again.\n");
                         customer(res);
                     }
 
