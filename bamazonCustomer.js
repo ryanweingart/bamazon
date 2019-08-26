@@ -20,10 +20,10 @@ connection.connect(function(error) {
 function table() {
     connection.query("SELECT * FROM products", function(err, res) {
         for (var i = 0; i < res.length; i++) {
-            log("Item #" + res[i].item_id + "\n" + 
-                "Product: " + res[i].product_name + "\n" + 
-                "Department: " + res[i].department_name + "\n" + 
-                "Price: $" + res[i].price + "\n" + 
+            log("Item #" + res[i].item_id + " || " + 
+                "Product: " + res[i].product_name + " || " + 
+                "Department: " + res[i].department_name + " || " + 
+                "Price: $" + res[i].price + " || " + 
                 "Quantity Available: " + res[i].stock_quantity + "\n");
         }
         customer(res);
@@ -60,13 +60,27 @@ function customer(res) {
                 }).then(function(answer) {
                     if ((res[id].stock_quantity - answer.quantity) > 0) {
                         connection.query("UPDATE products SET stock_quantity='" + (res[id].stock_quantity - answer.quantity) + "' WHERE product_name='" + product + "'", function(err,res2) {
-                            log("You have purchased the product!");
-                            table();
+                            log("You have purchased " + answer.quantity + " " + product + "s. \n" +
+                            "Your total for your purchase is $" + (answer.quantity * res[id].price) + ".");
+
+                            inquirer.prompt({
+                                type: "confirm",
+                                name: "confirm",
+                                message: "Would you like to purchase another item?",
+                                default: true
+                            }).then(function(answer) {
+                                if (answer.confirm) {
+                                    table();
+                                } else {
+                                    process.exit();
+                                }
+                            })
                         })
                     } else {
-                        log("Not enough in stock!");
+                        log("Not enough in stock! There are only " + res[id].stock_quantity + " " + product + "s available, please try again.");
                         customer();
                     }
+
                 })
             }
         }
