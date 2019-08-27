@@ -1,5 +1,6 @@
 var mysql = require("mysql");
 var inquirer = require("inquirer");
+var Table = require("cli-table");
 var log = console.log;
 
 var connection = mysql.createConnection({
@@ -29,14 +30,17 @@ connection.connect(function(error) {
     })
 
 function table() {
+    var table = new Table({
+        head: ["Item #", "Product", "Department", "Price", "Quantity"],
+        colWidths: [10, 30, 15, 10, 10]
+    });
+
     connection.query("SELECT * FROM products", function(err, res) {
         for (var i = 0; i < res.length; i++) {
-            log("\nItem #" + res[i].item_id + " || " + 
-                "Product: " + res[i].product_name + " || " + 
-                "Department: " + res[i].department_name + " || " + 
-                "Price: $" + res[i].price + " || " + 
-                "Quantity Available: " + res[i].stock_quantity + "\n");
+            table.push([res[i].item_id, res[i].product_name, res[i].department_name, res[i].price, res[i].stock_quantity]);
         }
+
+        log(table.toString());
         customer(res);
     })
 }
@@ -73,7 +77,7 @@ function customer(res) {
                     if ((res[id].stock_quantity - answer.quantity) > 0) {
                         connection.query("UPDATE products SET stock_quantity='" + (res[id].stock_quantity - answer.quantity) + "' WHERE product_name='" + product + "'", function(err,res2) {
                             log("\nYou have purchased " + answer.quantity + " " + product + "(s). \n" +
-                            "Your total for your purchase is $" + (answer.quantity * res[id].price) + ".\n");
+                            "Your total for your purchase is $" + (answer.quantity * res[id].price).toFixed(2) + ".\n");
 
                             inquirer.prompt({
                                 type: "confirm",
