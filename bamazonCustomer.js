@@ -16,7 +16,7 @@ connection.connect(function(error) {
     inquirer.prompt({
         type: "confirm",
         name: "confirm",
-        message: "\nWelcome to Bamazon! Would you like to purchase something from our store?",
+        message: "Welcome to Bamazon! Would you like to purchase something from our store?",
         default: true
     }).then(function(answer) {
         if (answer.confirm) {
@@ -72,7 +72,7 @@ function customer(res) {
                 }).then(function(answer) {
                     if ((res[id].stock_quantity - answer.quantity) > 0) {
                         connection.query("UPDATE products SET stock_quantity='" + (res[id].stock_quantity - answer.quantity) + "' WHERE product_name='" + product + "'", function(err,res2) {
-                            log("\nYou have purchased " + answer.quantity + " " + product + "s. \n" +
+                            log("\nYou have purchased " + answer.quantity + " " + product + "(s). \n" +
                             "Your total for your purchase is $" + (answer.quantity * res[id].price) + ".\n");
 
                             inquirer.prompt({
@@ -90,7 +90,7 @@ function customer(res) {
                             })
                         })
                     } else {
-                        log("\nNot enough in stock! There is/are only " + res[id].stock_quantity + " " + product + "(s)N available, please try again.\n");
+                        log("\nNot enough in stock! There is/are only " + res[id].stock_quantity + " " + product + "(s) available, please try again.\n");
                         customer(res);
                     }
 
