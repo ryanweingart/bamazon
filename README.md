@@ -30,8 +30,11 @@ If the user enters an item, they are asked how many they would like to buy. Afte
 
 ![Total Purchase](https://github.com/ryanweingart/bamazon/blob/master/Images/Total%20Purchase.png)
 
+If the user chooses no, they will be given the same message thanking them for stopping by. If they choose yes, they will be presented with the same table, but the amount of the purchased item will be subtracted from the total quantity and reflected in the new table.
 
 ![Updated Table](https://github.com/ryanweingart/bamazon/blob/master/Images/Updated%20Table.png)
+
+If the user chooses to purchase an item, but then types an amount that is more than what is in stock, they are given a message that tells them there is not enough of that item in stock, as shown below:
 
 ![Not Enough Stock](https://github.com/ryanweingart/bamazon/blob/master/Images/Not%20Enough%20Stock.png)
 
