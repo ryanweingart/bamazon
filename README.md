@@ -30,3 +30,8 @@ If the user enters an item, they are asked how many they would like to buy. Afte
 
 ![Total Purchase](https://github.com/ryanweingart/bamazon/blob/master/Images/Total%20Purchase.png)
 
+
+![Updated Table](https://github.com/ryanweingart/bamazon/blob/master/Images/Updated%20Table.png)
+
+![Not Enough Stock](https://github.com/ryanweingart/bamazon/blob/master/Images/Not%20Enough%20Stock.png)
+
