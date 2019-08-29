@@ -21,3 +21,12 @@ If the user selects yes, they are presented with a table of items that are avail
 * Quantity
 
 ![Original Table](https://github.com/ryanweingart/bamazon/blob/master/Images/Original%20Table.png)
+
+The user is then asked which item they would like to buy, or they can choose to type the word "exit" if they would like to get out of the app, as shown below:
+
+![Answer Exit](https://github.com/ryanweingart/bamazon/blob/master/Images/Answer%20Exit.png)
+
+If the user enters an item, they are asked how many they would like to buy. After the user enters an amount, and there is enough of that item in stock, they are presented with the total for their purchase and asked if they would like to purchase another item.
+
+![Total Purchase](https://github.com/ryanweingart/bamazon/blob/master/Images/Total%20Purchase.png)
+
